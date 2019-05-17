@@ -29,9 +29,9 @@ int main()
 	char** matriz=NULL;
 	matriz=crearMatriz(11);
 	matriz=llenarMatriz(matriz, 11);
+	printMatriz(matriz, 11);
 	while(gananBlancos==false && gananNegros==false)
 	{
-		printMatriz(matriz, 11);
 		if(turno==false)
 		{
 			cout<<"Moscovita, por favor ingrese la coordenada que desea moverse:  "<<endl;
@@ -52,15 +52,35 @@ int main()
 				cin>>movimiento2;
 				movValido=paraMover(matriz, movimiento2, turno);
 			}
+			printMatriz(matriz,11);
+			turno=true;
 		}	
-		else
+		if(turno==true)
 		{
-			
+			cout<<"Sueco, por favor ingrese la coordenada que desea moverse:  "<<endl;
+                        cin>>movimiento1;
+                        piezaValida=turnoValido(matriz, movimiento1, turno);
+                        while(piezaValida==false)
+                        {
+                                cout<<"Ingrese un movimiento valido"<<endl;
+                                cin>>movimiento1;
+                                piezaValida=turnoValido(matriz, movimiento1,turno);
+                        }
+                        cout<<"Sueco, por favor, ingrese la coordenada donde sea moverse: "<<endl;
+                        cin>>movimiento2;
+                        movValido=paraMover(matriz, movimiento2, turno);
+                        while(movValido==false)
+                        {
+                                cout<<"Ingrese una posicion valida: "<<endl;
+                                cin>>movimiento2;
+                                movValido=paraMover(matriz, movimiento2, turno);
+                        }
+			printMatriz(matriz,11);
+                        turno=false;
 		}
-	printMatriz(matriz,11);
-	gananBlancos=true;
-	gananNegros=true;	
-	liberarMatriz(matriz, 11);
+		gananBlancos=false;
+		gananNegros=false;	
+		//liberarMatriz(matriz, 11);
 	}
 	return 0;
 
@@ -165,20 +185,29 @@ bool paraMover(char** matriz, string coordenada, bool turno)
 
 		if(fila_para_mover!=fila_a_mover && turno==true && matriz[fila_para_mover][columna_para_mover]==' ')
 		{
-			cout<<"entraaaaa aqui wey"<<endl;
 			matriz[fila_para_mover][columna_para_mover]='B';
 			matriz[fila_a_mover][columna_a_mover]=' ';
-			cout<<"entraaaa"<<endl;
 			retorno=true;
 		}
-		if(columna_para_mover!=columna_a_mover && turno==false && matriz[fila_para_mover][columna_para_mover]==' ')
+		if(columna_para_mover!=columna_a_mover && turno==true && matriz[fila_para_mover][columna_para_mover]==' ')
 		{
-			cout<<"entraaa"<<endl;
 			matriz[fila_para_mover][columna_para_mover]='N';
                        	matriz[fila_a_mover][columna_a_mover]=' ';
-			cout<<"entraa"<<endl;
 			retorno=true;
 		}
+		if(fila_para_mover!=fila_a_mover && turno==false && matriz[fila_para_mover][columna_para_mover]==' ')
+                {
+                        matriz[fila_para_mover][columna_para_mover]='B';
+                        matriz[fila_a_mover][columna_a_mover]=' ';
+                        retorno=true;
+                }
+                if(columna_para_mover!=columna_a_mover && turno==false && matriz[fila_para_mover][columna_para_mover]==' ')
+                {
+                        matriz[fila_para_mover][columna_para_mover]='N';
+                        matriz[fila_a_mover][columna_a_mover]=' ';
+                        retorno=true;
+                }
+
 		if(fila_para_mover==fila_a_mover && columna_para_mover==columna_a_mover)
 		{
 			cout<<"entra"<<endl;
@@ -279,17 +308,15 @@ bool turnoValido(char** matriz, string coordenada, bool turno)
 		}
 		fila_a_mover=columna;
 		columna_a_mover=fila;
+		retorno=false;
 		if(turno==false)
 			if(matriz[fila][columna]=='N')
 				retorno=true;
-			else
-				retorno=false;
 		if(turno==true)
-			if(matriz[fila][columna]=='B')
+			if(matriz[fila][columna]=='B' || matriz[fila][columna]=='R')
 				retorno=true;
-			else
-				retorno=false;
-
+	
+	//cout<<matriz[fila][columna]<<endl;
 	return retorno;		
 }
 
