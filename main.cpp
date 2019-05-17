@@ -33,7 +33,7 @@ char** llenarMatriz(char** matriz, int size)
 				matriz[i][j]='N';
 			else if(i==3 && j==5)
 				matriz[i][j]='B';
-			else if(i==4 && j==4 || i==4 && j==5 || i==4)
+			else if(i==4 && j==4 || i==4 && j==5 || i==4 && j==6)
 			       matriz[i][j]='B';
 			else if(i==4 && j==0 || i==4 && j==1 || i==4 && j==9 || i==4 && j==10)
 				matriz[i][j]='N';
@@ -45,7 +45,9 @@ char** llenarMatriz(char** matriz, int size)
 				matriz[i][j]='N';
 			else if(i==6 && j==0 || i==6 && j==1)	
 				matriz[i][j]='N';
-			else if(i==6 && j==5 || i==6 && j==5 || i==6 && j==7)
+			else if (i==6 && j==0 || i==6 && j==1 || i==6 && j==9 || i==6 && j==10)
+				matriz[i][j]='N';
+			else if(i==6 && j==4 || i==6 && j==6 || i==6 && j==5)
 				matriz[i][j]='B';
 			else if(i==7 && j==5)
 				matriz[i][j]='B';
