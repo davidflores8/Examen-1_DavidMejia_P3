@@ -5,14 +5,14 @@ using std::cout;
 using std::endl;
 using std::string;
 
-void liberarMatriz(string**, int);
-void printMatriz(string**, int);
-string** crearMatriz(int);
-
+void liberarMatriz(char**, int);
+void printMatriz(char**, int);
+char** crearMatriz(int);
+char** llenarMatriz(char**);
 
 int main()
 {
-	string** matriz=NULL;
+	char** matriz=NULL;
 	matriz=crearMatriz(11);
 	printMatriz(matriz, 11);
 	liberarMatriz(matriz, 11);
@@ -20,19 +20,25 @@ int main()
 
 }
 
-string** crearMatriz(int size)
+char** llenarMatriz(char** matriz, int size)
 {
-        string**matriz=NULL;
-        matriz=new string*[size];
+
+
+}
+
+char** crearMatriz(int size)
+{
+        char**matriz=NULL;
+        matriz=new char*[size];
         for(int i=0; i<size;i++)
         {
-                matriz[i]=new string[size];
+                matriz[i]=new char[size];
         }
         return matriz;
 }
 
 
-void printMatriz(string** matrix, int size)
+void printMatriz(char** matrix, int size)
 {
         for(int i=0;i<size;i++)
         {
@@ -48,7 +54,7 @@ void printMatriz(string** matrix, int size)
 
 
 
-void liberarMatriz(string** matriz, int size)
+void liberarMatriz(char** matriz, int size)
 {
         for(int g=0;g<size;g++)
         {
