@@ -183,13 +183,13 @@ bool paraMover(char** matriz, string coordenada, bool turno)
                 }
                	fila_para_mover=columna;
                 columna_para_mover=fila;
-		cout<<" lo que hay en el pesacio donde movere:   "<<matriz[fila_para_mover][columna_para_mover]<<endl;
-		cout<<" "<<endl;
-		cout<<"Fila para mover "<<fila_para_mover<<endl;
-		cout<<"Columna para mover "<<columna_para_mover<<endl;
-		cout<<" "<<endl;
-		cout<<"Fila a mover "<<fila_a_mover<<endl;
-		cout<<"Columna a mover "<<columna_a_mover<<endl;
+		//cout<<" lo que hay en el pesacio donde movere:   "<<matriz[fila_para_mover][columna_para_mover]<<endl;
+		//cout<<" "<<endl;
+		//cout<<"Fila para mover "<<fila_para_mover<<endl;
+		//cout<<"Columna para mover "<<columna_para_mover<<endl;
+		//cout<<" "<<endl;
+		//cout<<"Fila a mover "<<fila_a_mover<<endl;
+		//cout<<"Columna a mover "<<columna_a_mover<<endl;
 		if((fila_para_mover==0 && columna_para_mover==0) || (fila_para_mover==10 && columna_para_mover==0) || (fila_para_mover=10 && columna_para_mover==10) || (fila_para_mover==0 && columna_para_mover==10))
 		{
 			//cout<<"Entra aqui"<<endl;
