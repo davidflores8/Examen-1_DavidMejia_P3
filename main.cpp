@@ -11,6 +11,9 @@ char** crearMatriz(int);
 char** llenarMatriz(char**, int);
 bool turnoValido (char**, string, bool);
 bool paraMover(char**, string, bool);
+bool ganan_Blancos(char**);
+bool ganan_Negros(char**);
+void CapturaGuardianes(char**, int);
 int fila_a_mover;
 int columna_a_mover;
 int fila_para_mover;
@@ -24,6 +27,8 @@ int main()
 	bool movValido=false;
 	fila_a_mover=0;
 	columna_a_mover=0;
+	fila_para_mover=0;
+	columna_para_mover=0;
 	string movimiento1="";	
 	string movimiento2="";
 	char** matriz=NULL;
@@ -52,6 +57,9 @@ int main()
 				cin>>movimiento2;
 				movValido=paraMover(matriz, movimiento2, turno);
 			}
+			gananBlancos=ganan_Blancos(matriz);
+			gananNegros=ganan_Negros(matriz);
+                        CapturaGuardianes(matriz,11);
 			printMatriz(matriz,11);
 			turno=true;
 		}	
@@ -75,22 +83,74 @@ int main()
                                 cin>>movimiento2;
                                 movValido=paraMover(matriz, movimiento2, turno);
                         }
+			gananBlancos=ganan_Blancos(matriz);
+			gananNegros=ganan_Negros(matriz);
+			CapturaGuardianes(matriz,11);
 			printMatriz(matriz,11);
                         turno=false;
-			//cout<<"fila a mover: "<<fila_a_mover<<endl;
-			//cout<<"columna a mover: "<<columna_a_mover<<endl;
-			//cout<<"fila para mover: "<<fila_para_mover<<endl;
-			//cout<<"columna para mover: "<<columna_para_mover<<endl;
 
 
 		}
-		gananBlancos=false;
-		gananNegros=false;	
-		//liberarMatriz(matriz, 11);
+		if(gananNegros==true)
+			cout<<"Los moscovitas han ganado el juego"<<endl;
+		else if (gananBlancos==true)
+			cout<<"Los suecos han ganado el juego"<<endl;
+		liberarMatriz(matriz, 11);
 	}
 	return 0;
 
 }
+
+void CapturaGuardianes(char** matriz, int size)
+
+{
+	int i=0;
+	int j=0;
+	for(i=1;i<10;i++)
+		for(j=1;j<10;j++)
+			if(matriz[i][j]=='B')
+			{
+				if(matriz[i+1][j]=='N' && matriz[i-1][j]=='N' && matriz[i][j+1]=='N' && matriz[i][j-1]=='N')
+					matriz[i][j]=' ';
+			}
+			if(matriz[i][j]=='N')
+                        {
+                                if(matriz[i+1][j]=='B' && matriz[i-1][j]=='B' && matriz[i][j+1]=='B' && matriz[i][j-1]=='B')
+                                        matriz[i][j]=' ';
+                        }             
+}
+
+
+bool ganan_Blancos(char** matriz)
+{
+	if(matriz[10][0]=='R')
+		return true;
+	else if(matriz[0][0]=='R')
+		return true;
+	else if(matriz[10][10]=='R')
+		return true;
+	else if(matriz[0][10]=='R')
+		return true;
+	else
+		return false;
+}
+
+bool ganan_Negros(char**matriz)
+{
+	int i=0;
+        int j=0;
+	bool retorno=false;
+        for(i=1;i<10;i++)
+                for(j=1;j<10;j++)
+                        if(matriz[i][j]=='R')
+                        {
+                                if(matriz[i+1][j]=='N' && matriz[i-1][j]=='N' && matriz[i][j+1]=='N' && matriz[i][j-1]=='N')
+                                        retorno=true;
+                        }
+
+	return retorno;
+}
+
 
 bool paraMover(char** matriz, string coordenada, bool turno)
 {
@@ -99,9 +159,9 @@ bool paraMover(char** matriz, string coordenada, bool turno)
         bool retorno=false;
         if(coordenada.length()==4)
                 if(coordenada[2]=='1' && coordenada[3]=='0')
-                        fila=10;
+                        fila=9;
                 else if (coordenada[2]==1 && coordenada[3]=='1')
-                        fila==1;
+                        fila==10;
                 else
                         retorno=false;
         else
@@ -109,37 +169,37 @@ bool paraMover(char** matriz, string coordenada, bool turno)
                 switch(coordenada[0])
                 {
                         case 'A':
-                                columna=0;
+                                fila=0;
                         break;
                         case 'B':
-                                columna=1;
+                                fila=1;
                         break;
                         case 'C':
-                                columna=2;
+                                fila=2;
                         break;
                         case 'D':
-                                columna=3;
+                                fila=3;
                         break;
                         case 'E':
-                                columna=4;
+                                fila=4;
                         break;
                         case 'F':
-                                columna=5;
+                                fila=5;
                         break;
                         case 'G':
-                                columna=6;
-			 break;
+                                fila=6;
+			break;
                         case 'H':
-                                columna=7;
+                                fila=7;
                         break;
                         case 'I':
-                                columna=8;
+                                fila=8;
                         break;
                         case 'J':
-                                columna=9;
+                                fila=9;
                         break;
                         case 'K':
-                                columna=10;
+                                fila=10;
                         break;
                         default:
                                 retorno=false;
@@ -148,89 +208,71 @@ bool paraMover(char** matriz, string coordenada, bool turno)
                 switch(coordenada[2])
                 {
                         case '0':
-                                fila=0;
+                                columna=0;
                         break;
                         case '1':
-                                fila=1;
+                                columna=1;
                         break;
                         case '2':
-                                fila=2;
+                                columna=2;
                         break;
                         case '3':
-                                fila=3;
+                                columna=3;
                         break;
                         case '4':
-                                fila=4;
+                                columna=4;
                         break;
                         case '5':
-				fila=5;
+				columna=5;
                         break;
                         case '6':
-                                fila=6;
+                                columna=6;
                         break;
                         case '7':
-                                fila=7;
+                                columna=7;
                         break;
                         case '8':
-                                fila=8;
+                                columna=8;
                         break;
                         case '9':
-                                fila=9;
+                                columna=9;
                         break;
                         default:
                                 retorno=false;
                         break;
                 }
-               	fila_para_mover=columna;
-                columna_para_mover=fila;
-		//cout<<" lo que hay en el pesacio donde movere:   "<<matriz[fila_para_mover][columna_para_mover]<<endl;
-		//cout<<" "<<endl;
-		//cout<<"Fila para mover "<<fila_para_mover<<endl;
-		//cout<<"Columna para mover "<<columna_para_mover<<endl;
-		//cout<<" "<<endl;
-		//cout<<"Fila a mover "<<fila_a_mover<<endl;
-		//cout<<"Columna a mover "<<columna_a_mover<<endl;
-		if((fila_para_mover==0 && columna_para_mover==0) || (fila_para_mover==10 && columna_para_mover==0) || (fila_para_mover=10 && columna_para_mover==10) || (fila_para_mover==0 && columna_para_mover==10))
+		retorno=false;
+		if((fila==0 && columna==0) || (fila==10 && columna==0) || (fila==10 && columna==10) || (fila==0 && columna==10))
 		{
-			//cout<<"Entra aqui"<<endl;
 			retorno=false;
 		}
 		else
 		{
-			//cout<<"entra al else"<<endl;
 			
-			if(fila_para_mover!=fila_a_mover && turno==true && matriz[columna][fila]==' ')
+			if(fila==fila_a_mover && turno==true && matriz[fila][columna]==' ')
 			{
-				//cout<<"aquie esta el pedo 2"<<endl;
-				matriz[columna][fila]='B';
+				matriz[fila][columna]='B';
 				matriz[fila_a_mover][columna_a_mover]=' ';
 				retorno=true;
 			}
-			if(columna_para_mover!=columna_a_mover && turno==true && matriz[columna][fila]==' ')
+			if(columna==columna_a_mover && turno==true && matriz[fila][columna]==' ')
 			{
-				//cout<<"aquie esta el pedo"<<endl;
-				matriz[columna][fila]='B';
+				matriz[fila][columna]='B';
                        		matriz[fila_a_mover][columna_a_mover]=' ';
 				retorno=true;
 			}
-			if(fila_para_mover==fila_a_mover && turno==false && matriz[columna][fila]==' ')
+			if(fila!=fila_a_mover && turno==false && matriz[fila][columna]==' ')
                 	{
-                        	matriz[fila_para_mover][columna_para_mover]='N';
+                        	matriz[fila][columna]='N';
                         	matriz[fila_a_mover][columna_a_mover]=' ';
                         	retorno=true;
                 	}
-                	if(columna_para_mover==columna_a_mover && turno==false && matriz[columna][fila]==' ')
+                	if(columna!=columna_a_mover && turno==false && matriz[fila][columna]==' ')
                 	{
-                        	matriz[fila_para_mover][columna_para_mover]='N';
+                        	matriz[fila][columna]='N';
                         	matriz[fila_a_mover][columna_a_mover]=' ';
                         	retorno=true;
                 	}
-
-			if(columna!=fila_a_mover && fila!=columna_a_mover)
-			{
-				cout<<"entra"<<endl;
-				retorno=false;
-			}
 		}
 	return retorno;	
 }
@@ -252,37 +294,37 @@ bool turnoValido(char** matriz, string coordenada, bool turno)
 		switch(coordenada[0])
 		{
 			case 'A':
-				columna=0;
+				fila=0;
 			break;
 			case 'B':
-				columna=1;
+				fila=1;
 			break;
 			case 'C':
-				columna=2;
+				fila=2;
 			break;
 			case 'D':
-				columna=3;
+				fila=3;
 			break;
 			case 'E':
-				columna=4;
+				fila=4;
 			break;
 			case 'F':
-				columna=5;
+				fila=5;
 			break;
 			case 'G':
-				columna=6;
+				fila=6;
 			break;
 			case 'H':
-				columna=7;
+				fila=7;
 			break;	
 			case 'I':
-				columna=8;
+				fila=8;
 			break;
 			case 'J':
-				columna=9;
+				fila=9;
 			break;
 			case 'K':
-				columna=10;
+				fila=10;
 			break;
 			default:
 				retorno=false;
@@ -291,50 +333,49 @@ bool turnoValido(char** matriz, string coordenada, bool turno)
 		switch(coordenada[2])
 		{			
 			case '0':
-				fila=0;
+				columna=0;
 			break;
 			case '1':
-				fila=1;
+				columna=1;
 			break;
 			case '2':
-				fila=2;
+				columna=2;
 			break;
 			case '3':
-				fila=3;
+				columna=3;
 			break;
 			case '4':
-				fila=4;
+				columna=4;
 			break;
 			case '5':
-				fila=5;
+				columna=5;
 			break;
 			case '6':
-				fila=6;
+				columna=6;
 			break;
 			case '7':
-				fila=7;
+				columna=7;
 			break;
 			case '8':
-				fila=8;
+				columna=8;
 			break;
 			case '9':
-				fila=9;
+				columna=9;
 			break;
 			default:
 				retorno=false;
 			break;
 		}
-		fila_a_mover=columna;
-		columna_a_mover=fila;
+		fila_a_mover=fila;
+		columna_a_mover=columna;
 		retorno=false;
 		if(turno==false)
-			if(matriz[fila][columna]=='N')
+			if(matriz[fila_a_mover][columna_a_mover]=='N')
 				retorno=true;
 		if(turno==true)
-			if(matriz[fila][columna]=='B' || matriz[fila][columna]=='R')
+			if(matriz[fila_a_mover][columna_a_mover]=='B' || matriz[fila_a_mover][columna_a_mover]=='R')
 				retorno=true;
 	
-	//cout<<matriz[fila][columna]<<endl;
 	return retorno;		
 }
 
