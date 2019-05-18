@@ -77,6 +77,12 @@ int main()
                         }
 			printMatriz(matriz,11);
                         turno=false;
+			//cout<<"fila a mover: "<<fila_a_mover<<endl;
+			//cout<<"columna a mover: "<<columna_a_mover<<endl;
+			//cout<<"fila para mover: "<<fila_para_mover<<endl;
+			//cout<<"columna para mover: "<<columna_para_mover<<endl;
+
+
 		}
 		gananBlancos=false;
 		gananNegros=false;	
@@ -177,43 +183,55 @@ bool paraMover(char** matriz, string coordenada, bool turno)
                 }
                	fila_para_mover=columna;
                 columna_para_mover=fila;
-		//cout<<"Fila para mover "<<fila_para_mover<<endl;
-		//cout<<"Columna para mover "<<columna_para_mover<<endl;
-		//cout<<" "<<endl;
-		//cout<<"Fila a mover "<<fila_a_mover<<endl;
-		//cout<<"Columna a mover "<<columna_a_mover<<endl;
-
-		if(fila_para_mover!=fila_a_mover && turno==true && matriz[fila_para_mover][columna_para_mover]==' ')
+		cout<<" lo que hay en el pesacio donde movere:   "<<matriz[fila_para_mover][columna_para_mover]<<endl;
+		cout<<" "<<endl;
+		cout<<"Fila para mover "<<fila_para_mover<<endl;
+		cout<<"Columna para mover "<<columna_para_mover<<endl;
+		cout<<" "<<endl;
+		cout<<"Fila a mover "<<fila_a_mover<<endl;
+		cout<<"Columna a mover "<<columna_a_mover<<endl;
+		if((fila_para_mover==0 && columna_para_mover==0) || (fila_para_mover==10 && columna_para_mover==0) || (fila_para_mover=10 && columna_para_mover==10) || (fila_para_mover==0 && columna_para_mover==10))
 		{
-			matriz[fila_para_mover][columna_para_mover]='B';
-			matriz[fila_a_mover][columna_a_mover]=' ';
-			retorno=true;
-		}
-		if(columna_para_mover!=columna_a_mover && turno==true && matriz[fila_para_mover][columna_para_mover]==' ')
-		{
-			matriz[fila_para_mover][columna_para_mover]='N';
-                       	matriz[fila_a_mover][columna_a_mover]=' ';
-			retorno=true;
-		}
-		if(fila_para_mover!=fila_a_mover && turno==false && matriz[fila_para_mover][columna_para_mover]==' ')
-                {
-                        matriz[fila_para_mover][columna_para_mover]='B';
-                        matriz[fila_a_mover][columna_a_mover]=' ';
-                        retorno=true;
-                }
-                if(columna_para_mover!=columna_a_mover && turno==false && matriz[fila_para_mover][columna_para_mover]==' ')
-                {
-                        matriz[fila_para_mover][columna_para_mover]='N';
-                        matriz[fila_a_mover][columna_a_mover]=' ';
-                        retorno=true;
-                }
-
-		if(fila_para_mover==fila_a_mover && columna_para_mover==columna_a_mover)
-		{
-			cout<<"entra"<<endl;
+			//cout<<"Entra aqui"<<endl;
 			retorno=false;
 		}
+		else
+		{
+			//cout<<"entra al else"<<endl;
+			
+			if(fila_para_mover!=fila_a_mover && turno==true && matriz[columna][fila]==' ')
+			{
+				//cout<<"aquie esta el pedo 2"<<endl;
+				matriz[columna][fila]='B';
+				matriz[fila_a_mover][columna_a_mover]=' ';
+				retorno=true;
+			}
+			if(columna_para_mover!=columna_a_mover && turno==true && matriz[columna][fila]==' ')
+			{
+				//cout<<"aquie esta el pedo"<<endl;
+				matriz[columna][fila]='B';
+                       		matriz[fila_a_mover][columna_a_mover]=' ';
+				retorno=true;
+			}
+			if(fila_para_mover==fila_a_mover && turno==false && matriz[columna][fila]==' ')
+                	{
+                        	matriz[fila_para_mover][columna_para_mover]='N';
+                        	matriz[fila_a_mover][columna_a_mover]=' ';
+                        	retorno=true;
+                	}
+                	if(columna_para_mover==columna_a_mover && turno==false && matriz[columna][fila]==' ')
+                	{
+                        	matriz[fila_para_mover][columna_para_mover]='N';
+                        	matriz[fila_a_mover][columna_a_mover]=' ';
+                        	retorno=true;
+                	}
 
+			if(columna!=fila_a_mover && fila!=columna_a_mover)
+			{
+				cout<<"entra"<<endl;
+				retorno=false;
+			}
+		}
 	return retorno;	
 }
 
